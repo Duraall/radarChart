@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width: 50%; position: absolute">
+        <div class="chartBox">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const mainCordinat = [20, 75, 35, 90, 50, 10];
+        const secondCordinat = [40, 50, 20, 10, 40, 60];
+        const thirdCordinat = [15, 60, 30, 70, 55, 5];
+        const fourthCordinat = [30, 45, 60, 20, 80, 25];
+        let legalTechCordinat = [25, 25, 75, 25, 50, 25];
+        let web3Cordinat = [20, 50, 50, 80, 50, 50];
+
+        const data = {
+            labels: [
+                'Hukuk Teknolojileri',
+                'Siber Güvenlik',
+                'Web3',
+                'Tahrif ve Sahteciliği Önleme',
+                'İstihbarat',
+                'Dijital Marka Koruması',
+            ],
+            datasets: [{
+                label: 'Siber Güvenlik',
+                data: [100, 100, 100, 100, 100, 100],
+                fill: true,
+                backgroundColor: 'rgba(121, 205, 205, 0.2)',
+                borderColor: 'rgb(205, 133, 63)',
+                pointBackgroundColor: 'rgb(255, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(255, 99, 132)'
+            }, {
+                label: 'Hukuk teknolojileri',
+                data: legalTechCordinat,
+                fill: true,
+                backgroundColor: 'rgba(255, 186, 200, 0.3)',
+                borderColor: 'rgb(54, 162, 235)',
+                pointBackgroundColor: 'rgb(54, 162, 235)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }, {
+                label: 'Web3',
+                data: web3Cordinat,
+                fill: true,
+                backgroundColor: 'rgba(111, 128, 74, 0.2)',
+                borderColor: 'rgb(54, 162, 235)',
+                pointBackgroundColor: 'rgb(54, 162, 235)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }]
+        };
+
+        const config = {
+            type: 'radar',
+            data: data,
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            count: 5,
+                            display: false
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 2
+                    }
+                }
+            }
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        function cordinatChange() {
+            const legaltechCor = myChart.data.datasets.find(dataset => dataset.label === "Hukuk teknolojileri");
+            const web3Cor = myChart.data.datasets.find(dataset => dataset.label === "Web3");
+
+            if (legaltechCor.data.toString() === legalTechCordinat.toString()) {
+                legaltechCor.data = secondCordinat;
+            } else if (legaltechCor.data.toString() === secondCordinat.toString()) {
+                legaltechCor.data = thirdCordinat;
+            } else if (legaltechCor.data.toString() === thirdCordinat.toString()) {
+                legaltechCor.data = fourthCordinat;
+            } else {
+                legaltechCor.data = mainCordinat;
+            }
+
+            if (web3Cor.data.toString() === web3Cordinat.toString()) {
+                web3Cor.data = mainCordinat;
+            } else if (web3Cor.data.toString() === mainCordinat.toString()) {
+                web3Cor.data = secondCordinat;
+            } else if (web3Cor.data.toString() === secondCordinat.toString()) {
+                web3Cor.data = thirdCordinat;
+            } else {
+                web3Cor.data = fourthCordinat;
+            }
+
+            myChart.update();
+        }
+
+        setInterval(cordinatChange, 1000);
+    </script>
+</body>
+</html>
